@@ -1,0 +1,93 @@
+/* Основные стили для всего сайта */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+}
+
+/* Стиль для заголовков секций */
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #0d6efd;
+    display: inline-block;
+}
+
+/* Стили для блоков с кодом */
+.code-block {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.code-block pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.code-block code {
+    background: none;
+    color: inherit;
+}
+
+/* Для лучшего отображения на мобильных устройствах */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.4rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .code-block {
+        font-size: 0.8rem;
+        padding: 0.75rem;
+    }
+}
+
+/* Карточки с тенями при наведении */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Стили для списков */
+.list-group-item {
+    border-left: none;
+    border-right: none;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+/* Прогресс-бар */
+.progress {
+    border-radius: 10px;
+    background-color: #e9ecef;
+}
+
+/* Адаптивные изображения */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Плавный скролл */
+html {
+    scroll-behavior: smooth;
+}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+    <title>JS Tester</title>
+    <style>
+        .active {
+            display: block !important;
+        }
+        .myText {
+            display: none;
+        }
+        .title {
+            font-size: 1.5em;
+            background-color: #ddd;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            user-select: none;
+        }
+        .title:hover {
+            background-color: #ccc;
+        }
+        .myText {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Выбираем все элементы с классом title
+            const titles = document.querySelectorAll('.title');
+            
+            // Выбираем все элементы с классом myText
+            const texts = document.querySelectorAll('.myText');
+            
+            // Функция для скрытия всех текстов
+            function hideAllTexts() {
+                for (let i = 0; i < texts.length; i++) {
+                    texts[i].classList.remove('active');
+                }
+            }
+            
+            // Добавляем обработчики для каждого заголовка
+            for (let i = 0; i < titles.length; i++) {
+                titles[i].addEventListener('click', function() {
+                    // Находим следующий элемент после заголовка
+                    const nextText = this.nextElementSibling;
+                    
+                    // Проверяем, является ли следующий элемент текстом
+                    if (nextText && nextText.classList.contains('myText')) {
+                        // Если текст уже активен - скрываем его
+                        if (nextText.classList.contains('active')) {
+                            nextText.classList.remove('active');
+                        } else {
+                            // Сначала скрываем все тексты
+                            hideAllTexts();
+                            // Потом показываем нужный
+                            nextText.classList.add('active');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Title #1</div>
+        <div class="myText">Just some text #1</div>
+        <div class="title">Title #2</div>
+        <div class="myText">Just some text #2</div>
+        <div class="title">Title #3</div>
+        <div class="myText">Just some text #3</div>
+    </div>
+</body>
+</html>

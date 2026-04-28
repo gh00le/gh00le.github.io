@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Циклическая смена заголовка</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 100px;
+        }
+        
+        h1 {
+            color: black;
+            font-size: 40px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="greeting">Доброе утро!</h1>
+    <button id="clickButton">Кликов: 0</button>
+
+    <script>
+        const greetingElement = document.getElementById('greeting');
+        const buttonElement = document.getElementById('clickButton');
+        
+        const phrases = ['Доброе утро!', 'Добрый день!', 'Добрый вечер!'];
+        
+        let clickCount = 0;
+        
+        buttonElement.addEventListener('click', function() {
+            clickCount++;
+            
+            buttonElement.textContent = 'Кликов: ' + clickCount;
+            
+            const phraseIndex = clickCount % phrases.length;
+            greetingElement.textContent = phrases[phraseIndex];
+        });
+    </script>
+</body>
+</html>

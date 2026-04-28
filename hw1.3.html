@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Цветные квадраты</title>
+    <style>
+        .square {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border: 2px solid black;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        body {
+            text-align: center;
+            margin-top: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+    </div>
+
+    <button onclick="randomColors()">Случайные цвета</button>
+    <button onclick="resetColors()">Сброс</button>
+
+    <script>
+        var colors = ['red', 'green', 'blue', 'pink', 'yellow', 'orange', 'purple', 'cyan', 'lime', 'coral'];
+        
+        var squares = document.querySelectorAll('.square');
+
+        function randomColors() {
+            for (var i = 0; i < squares.length; i++) {
+                var randomIndex = Math.floor(Math.random() * colors.length);
+                var randomColor = colors[randomIndex];
+                squares[i].style.backgroundColor = randomColor;
+            }
+        }
+
+        function resetColors() {
+            for (var i = 0; i < squares.length; i++) {
+                squares[i].style.backgroundColor = 'white';
+            }
+        }
+    </script>
+
+</body>
+</html>

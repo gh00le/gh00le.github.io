@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complete JavaScript Course</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        td {
+            border: 1px solid black;
+            padding: 10px;
+            cursor: pointer;
+        }
+        tr:hover {
+            background-color: white;
+        }
+        #message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const myArray = ['Анна', 'Борис', 'Кирилл', 'Виктория'];
+            
+            const messageDiv = document.getElementById('message');
+            const addFriendInput = document.getElementById('addFriend');
+            const addNewButton = document.getElementById('addNew');
+            const outputTable = document.getElementById('output');
+            
+            function renderTable() {
+                // очищаем таблицу
+                outputTable.innerHTML = '';
+                
+                myArray.forEach(function(name, index) {
+                    const row = document.createElement('tr');
+                    
+                    const cell1 = document.createElement('td');
+                    cell1.textContent = index + 1;
+                    
+                    const cell2 = document.createElement('td');
+                    cell2.textContent = name;
+                    
+                    const cell3 = document.createElement('td');
+                    cell3.textContent = '0';
+                    cell3.classList.add('vote-count');
+                    
+                    row.appendChild(cell1);
+                    row.appendChild(cell2);
+                    row.appendChild(cell3);
+                    
+                    row.addEventListener('click', function() {
+                        const voteCell = this.querySelector('.vote-count');
+                        let currentVotes = parseInt(voteCell.textContent);
+                        currentVotes = currentVotes + 1;
+                        voteCell.textContent = currentVotes;
+                    });
+                    
+                    outputTable.appendChild(row);
+                });
+            }
+            
+            function addNewFriend() {
+                // получаем значение из поля ввода
+                const newName = addFriendInput.value.trim();
+                
+                if (newName !== '') {
+                    myArray.push(newName);
+                    
+                    // обновляем таблицу
+                    renderTable();
+                    
+                    // очищаем поле ввода
+                    addFriendInput.value = '';
+                } 
+                else {
+                    alert('Введите имя!');
+                }
+            }
+            
+            // добавляем обработчик для кнопки Add Friend
+            addNewButton.addEventListener('click', addNewFriend);
+            
+            // добавляем возможность добавления по нажатию Enter
+            addFriendInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    addNewFriend();
+                }
+            });
+            
+            // изначальное отображение таблицы
+            renderTable();
+            
+            messageDiv.textContent = 'Динамический список людей';
+        });
+    </script>
+</head>
+<body>
+    <div id="message">Complete JavaScript Course</div>
+    <div>
+        <input type="text" id="addFriend" placeholder="Введите имя">
+        <input type="button" id="addNew" value="Add Friend">
+    </div>
+    <table id="output"></table>
+</body>
+</html>

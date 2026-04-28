@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Скрыть показать абзацы</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 250px;
+        }
+        
+        .text-block {
+            font-size: 20px;
+            margin: 20px;
+        }
+        
+        button {
+            margin: 5px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <p id="block1" class="text-block">Первый абзац</p>
+    <button id="btn1">Скрыть первый</button>
+    <br>
+    
+    <p id="block2" class="text-block">Второй абзац</p>
+    <button id="btn2">Скрыть второй</button>
+    <br>
+    
+    <p id="block3" class="text-block">Третий абзац</p>
+    <button id="btn3">Скрыть третий</button>
+    <br><br>
+    
+    <button id="toggleAllBtn">Скрыть всё</button>
+
+    <script>
+        const block1 = document.getElementById('block1');
+        const block2 = document.getElementById('block2');
+        const block3 = document.getElementById('block3');
+        
+        const btn1 = document.getElementById('btn1');
+        const btn2 = document.getElementById('btn2');
+        const btn3 = document.getElementById('btn3');
+        
+        const toggleAllBtn = document.getElementById('toggleAllBtn');
+        
+        // Кнопка для первого абзаца
+        btn1.addEventListener('click', function() {
+            if (block1.style.display === 'none') {
+                block1.style.display = 'block';
+                btn1.textContent = 'Скрыть первый';
+            } 
+            else {
+                block1.style.display = 'none';
+                btn1.textContent = 'Показать первый';
+            }
+            updateToggleAllButton();
+        });
+        
+        // Кнопка для второго абзаца
+        btn2.addEventListener('click', function() {
+            if (block2.style.display === 'none') {
+                block2.style.display = 'block';
+                btn2.textContent = 'Скрыть второй';
+            } 
+            else {
+                block2.style.display = 'none';
+                btn2.textContent = 'Показать второй';
+            }
+            updateToggleAllButton();
+        });
+        
+        // Кнопка для третьего абзаца
+        btn3.addEventListener('click', function() {
+            if (block3.style.display === 'none') {
+                block3.style.display = 'block';
+                btn3.textContent = 'Скрыть третий';
+            }
+            else {
+                block3.style.display = 'none';
+                btn3.textContent = 'Показать третий';
+            }
+            updateToggleAllButton();
+        });
+        
+        // Обновление текста общей кнопки
+        function updateToggleAllButton() {
+            const block1Hidden = block1.style.display === 'none';
+            const block2Hidden = block2.style.display === 'none';
+            const block3Hidden = block3.style.display === 'none';
+            
+            if (block1Hidden && block2Hidden && block3Hidden) {
+                toggleAllBtn.textContent = 'Показать всё';
+            }
+            else {
+                toggleAllBtn.textContent = 'Скрыть всё';
+            }
+        }
+        
+        // Общая кнопка
+        toggleAllBtn.addEventListener('click', function() {
+            const block1Hidden = block1.style.display === 'none';
+            const block2Hidden = block2.style.display === 'none';
+            const block3Hidden = block3.style.display === 'none';
+            
+            // Если все скрыты - показываем все
+            if (block1Hidden && block2Hidden && block3Hidden) {
+                block1.style.display = 'block';
+                block2.style.display = 'block';
+                block3.style.display = 'block';
+                btn1.textContent = 'Скрыть первый';
+                btn2.textContent = 'Скрыть второй';
+                btn3.textContent = 'Скрыть третий';
+                toggleAllBtn.textContent = 'Скрыть всё';
+            } 
+            else {
+                // Иначе скрываем все
+                block1.style.display = 'none';
+                block2.style.display = 'none';
+                block3.style.display = 'none';
+                btn1.textContent = 'Показать первый';
+                btn2.textContent = 'Показать второй';
+                btn3.textContent = 'Показать третий';
+                toggleAllBtn.textContent = 'Показать всё';
+            }
+        });
+    </script>
+</body>
+</html>

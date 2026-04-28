@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Состояния квадрата</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: gray;
+            margin: 20px auto;
+        }
+
+        .large {
+            width: 200px;
+            height: 200px;
+        }
+
+        .small {
+            width: 50px;
+            height: 50px;
+        }
+
+        .medium {
+            width: 150px;
+            height: 150px;
+        }
+
+        .red {
+            background: red;
+        }
+
+        .blue {
+            background: blue;
+        }
+
+        .green {
+            background: green;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        body {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <button onclick="changeState()">Стандарт</button>
+    </div>
+
+    <br><br>
+
+    <div>
+        <div id="stateBox" class="box"></div>
+    </div>
+
+    <script>
+        var state = 0;
+        var buttonTexts = ['Стандарт', 'Большой красный', 'Маленький синий', 'Средний зелёный'];
+        var box = document.getElementById('stateBox');
+        var button = document.querySelector('button');
+
+        function changeState() {
+            state = state + 1;
+            
+            if (state === 4) {
+                state = 0;
+            }
+            
+            box.className = 'box';
+            
+            if (state === 1) {
+                box.classList.add('large');
+                box.classList.add('red');
+            }
+            if (state === 2) {
+                box.classList.add('small');
+                box.classList.add('blue');
+            }
+            if (state === 3) {
+                box.classList.add('medium');
+                box.classList.add('green');
+            }
+            
+            button.textContent = buttonTexts[state];
+        }
+    </script>
+
+</body>
+</html>

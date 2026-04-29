@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Аналитика кликов</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: lightgray; 
+            padding: 30px; 
+        }
+        .container-box { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 15px; 
+        }
+        h1 { 
+            text-align: center; 
+            color: blue; 
+            margin-bottom: 30px; 
+        }
+        .box { 
+            background: lightblue; 
+            border: 2px solid blue; 
+            border-radius: 10px; 
+            padding: 40px; 
+            text-align: center;
+            cursor: pointer; 
+            font-size: 20px; 
+            font-weight: bold; 
+        }
+        .box:hover { 
+            background: yellow; 
+        }
+        .analytics-box { 
+            margin-top: 30px; 
+            background: white; 
+            border: 2px solid gray; 
+            border-radius: 10px; 
+            padding: 15px; 
+        }
+        .analytics-title { 
+            background: blue; 
+            color: white; 
+            padding: 10px; 
+            margin: -15px -15px 15px -15px; 
+            border-radius: 10px 10px 0 0; 
+        }
+        .click-item { 
+            background: lightgray; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            border-radius: 8px; 
+            font-family: monospace; 
+        }
+        .click-item span { 
+            font-weight: bold; 
+            color: blue; 
+        }
+        .btn-clear { 
+            background: red; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin-top: 15px; 
+        }
+        .btn-clear:hover { 
+            background: darkred; 
+        }
+        .empty-message { 
+            text-align: center; 
+            color: gray; 
+            padding: 20px; 
+        }
+        .row { 
+            display: flex; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+        }
+        .col { 
+            flex: 1; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-box">
+    <h1>Аналитика кликов</h1>
+    
+    <div class="row">
+        <div class="col"><div id="box1" class="box">Я был тут</div></div>
+        <div class="col"><div id="box2" class="box">Я тоже был тут</div></div>
+    </div>
+    <div class="row">
+        <div class="col"><div id="box3" class="box">Я не хочу здесь находиться</div></div>
+        <div class="col"><div id="box4" class="box">Я случайно сюда попал</div></div>
+    </div>
+    
+    <div class="analytics-box">
+        <div class="analytics-title">
+            История кликов
+            <span id="countDisplay" style="float: right;">(0 кликов)</span>
+        </div>
+        <div id="analyticsList"><div class="empty-message">Нет кликов. Нажмите на любой блок.</div></div>
+        <button id="clearBtn" class="btn-clear">Очистить историю</button>
+    </div>
+</div>
+
+<script>
+    let clickArray = [];
+    let analyticsList = document.getElementById('analyticsList');
+    let countDisplay = document.getElementById('countDisplay');
+    let clearBtn = document.getElementById('clearBtn');
+    
+    function updateDisplay() {
+        if (clickArray.length === 0) {
+            analyticsList.innerHTML = '<div class="empty-message">Нет кликов. Нажмите на любой блок.</div>';
+            countDisplay.textContent = '(0 кликов)';
+            return;
+        }
+        
+        countDisplay.textContent = '(' + clickArray.length + ' кликов)';
+        analyticsList.innerHTML = '';
+        
+        for (let i = 0; i < clickArray.length; i++) {
+            let item = clickArray[i];
+            let div = document.createElement('div');
+            div.className = 'click-item';
+            div.innerHTML = '<span>Клик ' + (i + 1) + ':</span> Текст: "' + item.text + '" | ID: ' + item.id + ' | Тег: ' + item.tag + ' | Класс: ' + item.className;
+            analyticsList.appendChild(div);
+        }
+    }
+    
+    document.addEventListener('click', function(event) {
+        let target = event.target;
+        
+        if (target.id && target.id !== 'clearBtn') {
+            let clickInfo = {
+                text: target.textContent,
+                id: target.id,
+                tag: target.tagName,
+                className: target.className
+            };
+            clickArray.push(clickInfo);
+            updateDisplay();
+        }
+    });
+    
+    clearBtn.addEventListener('click', function() {
+        clickArray = [];
+        updateDisplay();
+    });
+</script>
+
+</body>
+</html>

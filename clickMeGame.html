@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click Me Game</title>
+    <style>
+        .output {
+            width: 500px;
+            height: 500px;
+            border: 2px solid black;
+            margin: auto;
+            position: relative;
+            background-color: rgba(180, 180, 180, 0.836);
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .box {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-color: red;
+            cursor: pointer;
+            display: none;
+            border-radius: 5px;
+            z-index: 10;
+        }
+        .message {
+            text-align: center;
+            padding: 10px;
+            font-size: 1.3em;
+            margin-top: 20px;
+        }
+        .start-btn {
+            text-align: center;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            background-color: blue;
+            color: white;
+            margin: 20px auto;
+            width: 200px;
+            border-radius: 10px;
+            border: none;
+            display: block;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .start-btn:hover {
+            background-color: darkblue;
+        }
+        .loss {
+            text-align: center;
+            padding: 10px;
+            font-size: 1.3em;
+            margin-top: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="output">
+    <div class="box"></div>
+</div>
+<div class="message"></div>
+
+<script>
+    const outputDiv = document.querySelector('.output');
+    const messageDiv = document.querySelector('.message');
+    const clickBox = document.querySelector('.box');
+    let startTime = null;
+    let isGameActive = false;
+    let boxVisible = false;
+    let timeoutId = null;
+    
+    function getRandomNumber(max) {
+        return Math.floor(Math.random() * max);
+    }
+    
+    function setRandomPosition() {
+        const maxX = 450;
+        const maxY = 450;
+        const randomX = getRandomNumber(maxX);
+        const randomY = getRandomNumber(maxY);
+        
+        clickBox.style.left = randomX + 'px';
+        clickBox.style.top = randomY + 'px';
+    }
+    
+    function showBox() {
+        if (!isGameActive) return;
+        
+        setRandomPosition();
+        clickBox.style.display = 'block';
+        startTime = new Date().getTime();
+        boxVisible = true;
+        messageDiv.innerHTML = 'КЛИКНИ НА КРАСНЫЙ КВАДРАТ!';
+        messageDiv.style.color = 'red';
+    }
+    
+    function loseGame() {
+        if (isGameActive && boxVisible) {
+            isGameActive = false;
+            boxVisible = false;
+            clickBox.style.display = 'none';
+            
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            
+            messageDiv.innerHTML = 'ТЫ ПРОИГРАЛ! Нажал мимо квадрата!';
+            messageDiv.style.color = 'red';
+            showStartButton();
+        }
+    }
+    
+    function startGame() {
+        isGameActive = true;
+        boxVisible = false;
+        clickBox.style.display = 'none';
+        messageDiv.innerHTML = 'Ждите появление красного квадрата...';
+        messageDiv.style.color = 'black';
+        
+        const delay = getRandomNumber(3000) + 1000;
+        
+        timeoutId = setTimeout(function() {
+            if (isGameActive) {
+                showBox();
+            }
+        }, delay);
+    }
+    
+    clickBox.addEventListener('click', function(event) {
+        event.stopPropagation();
+        
+        if (startTime !== null && isGameActive && boxVisible) {
+            const clickTime = new Date().getTime();
+            const reactionTime = (clickTime - startTime) / 1000;
+            
+            clickBox.style.display = 'none';
+            isGameActive = false;
+            boxVisible = false;
+            
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            
+            messageDiv.innerHTML = 'Твоё время: ' + reactionTime.toFixed(3) + ' секунд!';
+            messageDiv.style.color = 'green';
+            showStartButton();
+        }
+    });
+    
+    outputDiv.addEventListener('click', function(event) {
+        if (event.target === clickBox) return;
+        
+        if (isGameActive && boxVisible) {
+            loseGame();
+        }
+    });
+    
+    function showStartButton() {
+    let startBtn = document.querySelector('.start-btn');
+    
+    if (!startBtn) {
+        startBtn = document.createElement('button');
+        startBtn.className = 'start-btn';
+        startBtn.innerHTML = 'Новая игра';
+        
+        const messageDiv = document.querySelector('.message');
+        messageDiv.insertAdjacentElement('afterend', startBtn);
+        
+        startBtn.addEventListener('click', function() {
+            startBtn.remove();
+            startGame();
+        });
+    } 
+    else {
+        startBtn.style.display = 'block';
+    }
+}
+    
+    startGame();
+</script>
+
+</body>
+</html>
